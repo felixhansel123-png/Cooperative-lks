@@ -1,7 +1,6 @@
 <?php
-
-
-$categories = [];
+require_once __DIR__ . "/../../repositories/employee-repositories.php";
+$employees = getEmployees();
 $isAdmin = true;
 $errors = [];
 
@@ -34,8 +33,8 @@ $pageSubtitle = "Kelola data employee koperasi";
                     <table>
                         <thead>
                             <tr>
-                                <th>full_name</th>
                                 <th>employee_number</th>
+                                <th>full_name</th>
                                 <th>gender</th>
                                 <th>birth_date</th>
                                 <th>position</th>
@@ -43,7 +42,30 @@ $pageSubtitle = "Kelola data employee koperasi";
                             </tr>
                         </thead>
                         <tbody>
+                            <?php if (empty($employees)): ?>
+                                <tr>
+                                    <td colspan="8">Koperasi belum memiliki employee.</td>
+                                </tr>
+                            <?php endif; ?>
+                            <?php foreach ($employees as $employee): ?>
+                                <tr>
+                                    <td colspan="1"><?= $employee['employee_number'] ?></td>
+                                    <td colspan="1"><?= $employee['full_name'] ?></td>
+                                    <td colspan="1"><?= $employee['gender'] ?></td>
+                                    <td colspan="1"><?= $employee['birth_date'] ?></td>
+                                    <td colspan="1"><?= $employee['position'] ?></td>
+                                    <td colspan="1"><?= $employee['salary'] ?></td>
+                                    <td colspan="2"> <a href="edit.php?id=<?= $employee['employee_id'] ?>"
+                                            class="btn">Edit</a>
+                                        <form action="../../actions/employees/delete.php" method="post"
+                                            style="display:inline" onsubmit="return confirm('Hapus employee ini?')">
+                                            <input type="hidden" name="id" value="<?= $employee['employee_id'] ?>">
+                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                        </form>
+                                    </td>
+                                </tr>
 
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>

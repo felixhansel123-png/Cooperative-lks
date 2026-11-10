@@ -1,12 +1,6 @@
 <?php
-// === TAHAP 1 - CRUD ===
-// TODO 1 : session_start();   (TAHAP 3: ganti dengan require middleware + requireAuth())
-// TODO 2 : require_once repositories/category-repository.php
-// TODO 3 : $categories = getCategories();
-// TODO 4 : ambil $_SESSION['errors'] lalu unset()  (untuk pesan gagal hapus)
-// === TAHAP 3 - OTORISASI (terakhir) ===
-// TODO 5 : $isAdmin = hasRole(['admin']);
-
+require_once __DIR__ . "/../../repositories/supplier-repositories.php";
+$suppliers = getSuppliers();
 $categories = [];
 $isAdmin = true;
 $errors = [];
@@ -49,6 +43,29 @@ $pageSubtitle = "Kelola data supplier koperasi";
                                 <th>partnership_date</th>
                                 <th>Aksi</th>
                             </tr>
+                            <?php if (empty($suppliers)): ?>
+                                <tr>
+                                    <td colspan="7"> Koperasi blm ada supplier</td>
+                                </tr>
+                            <?php endif; ?>
+                            <?php foreach ($suppliers as $supplier): ?>
+                                <tr>
+                                    <td colspan="1"><?= $supplier['supplier_name'] ?></td>
+                                    <td colspan="1"><?= $supplier['email'] ?></td>
+                                    <td colspan="1"><?= $supplier['phone'] ?></td>
+                                    <td colspan="1"><?= $supplier['address'] ?></td>
+                                    <td colspan="1"><?= $supplier['product_types'] ?></td>
+                                    <td colspan="1"><?= $supplier['partnership_date'] ?></td>
+                                    <td colspan="2">
+                                        <a href="edit.php?id=<?= $supplier['supplier_id'] ?>" class="btn">Edit</a>
+                                        <form action="../../actions/suppliers/delete.php" method="post"
+                                            style="display:inline" onsubmit="return confirm('Hapus supplier ini?')">
+                                            <input type="hidden" name="id" value="<?= $supplier['supplier_id'] ?>">
+                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </thead>
                     </table>
                 </div>
