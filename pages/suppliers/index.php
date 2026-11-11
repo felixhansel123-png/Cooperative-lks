@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . "/../../repositories/supplier-repositories.php";
 $suppliers = getSuppliers();
 $categories = [];
@@ -54,9 +55,11 @@ $pageSubtitle = "Kelola data supplier koperasi";
                                     <td colspan="1"><?= $supplier['email'] ?></td>
                                     <td colspan="1"><?= $supplier['phone'] ?></td>
                                     <td colspan="1"><?= $supplier['address'] ?></td>
-                                    <td colspan="1"><?= $supplier['product_types'] ?></td>
+                                    <td colspan="1">
+                                        <?= implode(', ', json_decode($supplier['product_types'], true) ?? []) ?>
+                                    </td>
                                     <td colspan="1"><?= $supplier['partnership_date'] ?></td>
-                                    <td colspan="2">
+                                    <td colspan="1">
                                         <a href="edit.php?id=<?= $supplier['supplier_id'] ?>" class="btn">Edit</a>
                                         <form action="../../actions/suppliers/delete.php" method="post"
                                             style="display:inline" onsubmit="return confirm('Hapus supplier ini?')">

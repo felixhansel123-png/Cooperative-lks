@@ -1,14 +1,21 @@
 <?php
-require_once __DIR__ . "/../config/database.php";
+require_once __DIR__ . "/helpers.php";
 
 function getSuppliers()
 {
     global $pdo;
-    $query = "select*from suppliers";
-    $stmt = $pdo->prepare($query);
-
+    $stmt = $pdo->prepare("SELECT * FROM suppliers");
     $stmt->execute();
-    $suppliers = $stmt->fetchAll();
-
-    return $suppliers;
+    return $stmt->fetchAll();
+}
+function getSupplier($id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT * FROM suppliers WHERE supplier_id = :id");
+    $stmt->execute(['id' => $id]);
+    return $stmt->fetch() ?: null;
+}
+function getProductTypes()
+{
+    return getEnumOptions('products', 'category');
 }

@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . "/../../repositories/product-repositories.php";
 $products = getProducts();
 $errors = [];
@@ -46,7 +47,7 @@ $pageSubtitle = "Kelola data product koperasi";
                         <TBody>
                             <?php if (empty($products)): ?>
                                 <tr>
-                                    <td colspan="10">Koperasi belum stock barang.</td>
+                                    <td colspan="9">Koperasi belum stock barang.</td>
                                 </tr>
                             <?php endif; ?>
                             <?php foreach ($products as $product): ?>
@@ -59,7 +60,7 @@ $pageSubtitle = "Kelola data product koperasi";
                                     <td colspan="1"><?= $product['stock'] ?></td>
                                     <td colspan="1"><?= $product['entry_date'] ?></td>
                                     <td colspan="1"><?= $product['description'] ?></td>
-                                    <td colspan="2">
+                                    <td colspan="1">
                                         <a href="edit.php?id=<?= $product['product_id'] ?>" class="btn">Edit</a>
                                         <form action="../../actions/products/delete.php" method="post"
                                             style="display:inline" onsubmit="return confirm('Hapus product ini?')">

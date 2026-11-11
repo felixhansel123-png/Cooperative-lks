@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . "/../../repositories/employee-repositories.php";
 $employees = getEmployees();
 $isAdmin = true;
@@ -39,12 +40,13 @@ $pageSubtitle = "Kelola data employee koperasi";
                                 <th>birth_date</th>
                                 <th>position</th>
                                 <th>salary</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if (empty($employees)): ?>
                                 <tr>
-                                    <td colspan="8">Koperasi belum memiliki employee.</td>
+                                    <td colspan="7">Koperasi belum memiliki employee.</td>
                                 </tr>
                             <?php endif; ?>
                             <?php foreach ($employees as $employee): ?>
@@ -55,8 +57,8 @@ $pageSubtitle = "Kelola data employee koperasi";
                                     <td colspan="1"><?= $employee['birth_date'] ?></td>
                                     <td colspan="1"><?= $employee['position'] ?></td>
                                     <td colspan="1"><?= $employee['salary'] ?></td>
-                                    <td colspan="2"> <a href="edit.php?id=<?= $employee['employee_id'] ?>"
-                                            class="btn">Edit</a>
+                                    <td colspan="1">
+                                        <a href="edit.php?id=<?= $employee['employee_id'] ?>" class="btn">Edit</a>
                                         <form action="../../actions/employees/delete.php" method="post"
                                             style="display:inline" onsubmit="return confirm('Hapus employee ini?')">
                                             <input type="hidden" name="id" value="<?= $employee['employee_id'] ?>">

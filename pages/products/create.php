@@ -1,5 +1,7 @@
 <?php
-
+require_once __DIR__ . "/../../repositories/product-repositories.php";
+$categories = getCategories();
+$units = getUnits();
 $errors = [];
 $old = [];
 
@@ -30,7 +32,7 @@ $pageSubtitle = "Lengkapi data product baru";
             <input type="text" name="product_code" value="">
           </div>
           <div class="form-group">
-            <label for="full_name">Nama produk</label>
+            <label for="product_name">Nama produk</label>
             <input type="text" name="product_name" value="">
           </div>
           <div class="form-group">

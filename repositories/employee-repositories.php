@@ -1,14 +1,28 @@
 <?php
-require_once __DIR__ . "/../config/database.php";
+require_once __DIR__ . "/helpers.php";
+
 function getEmployees()
 {
     global $pdo;
-    $query = "select * from employees";
-    $stmt = $pdo->prepare($query);
-
+    $stmt = $pdo->prepare("SELECT * FROM employees");
     $stmt->execute();
+    return $stmt->fetchAll();
+}
 
-    $employees = $stmt->fetchAll();
+function getEmployee($id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT * FROM employees WHERE employee_id = :id");
+    $stmt->execute(['id' => $id]);
+    return $stmt->fetch() ?: null;
+}
 
-    return $employees;
+function getGenders()
+{
+    return getEnumOptions('employees', 'gender');
+}
+
+function getPositions()
+{
+    return getEnumOptions('employees', 'position');
 }
