@@ -1,6 +1,11 @@
 <?php
 require_once __DIR__ . "/../../repositories/employee-repositories.php";
+require_once __DIR__ . "/../../middleware/auth-check.php";
 
+if ($_SESSION['role'] !== 'Admin') {
+  header("Location: ../employees/index.php");
+  exit();
+}
 $genders = getGenders();
 $positions = getPositions();
 

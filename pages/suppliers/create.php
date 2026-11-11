@@ -1,5 +1,11 @@
 <?php
 require_once __DIR__ . "/../../repositories/supplier-repositories.php";
+require_once __DIR__ . "/../../middleware/auth-check.php";
+
+if ($_SESSION['role'] !== 'Admin') {
+  header("Location: ../suppliers/index.php");
+  exit();
+}
 $productTypes = getProductTypes();
 [$errors, $old] = getFlash();
 $selectedTypes = $old['product_types'] ?? [];

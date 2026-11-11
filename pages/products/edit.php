@@ -1,7 +1,12 @@
 <?php
 
 require_once __DIR__ . "/../../repositories/product-repositories.php";
+require_once __DIR__ . "/../../middleware/auth-check.php";
 
+if ($_SESSION['role'] !== 'Admin') {
+  header("Location: ../products/index.php");
+  exit();
+}
 $id = $_GET['id'] ?? null;
 $product = getProduct($id);
 
