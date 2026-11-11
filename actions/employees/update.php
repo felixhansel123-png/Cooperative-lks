@@ -39,12 +39,10 @@ try {
               AND employee_id != :id";
 
     $stmt = $pdo->prepare($query);
-
     $stmt->execute([
         'employee_number' => $data['employee_number'],
         'id' => $id
     ]);
-
     if ($stmt->fetch()) {
         $pdo->rollBack();
 
@@ -59,14 +57,11 @@ try {
                 position = :position,
                 salary = :salary
               WHERE employee_id = :id";
-
     $stmt = $pdo->prepare($query);
-
     $stmt->execute($data + ['id' => $id]);
     $pdo->commit();
     header("Location: ../../pages/employees/index.php");
     exit();
-
 } catch (PDOException $error) {
     $pdo->rollBack();
     throw $error;
